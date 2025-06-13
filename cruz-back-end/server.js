@@ -10,7 +10,25 @@ const mongoose = require("mongoose");
 const app = express();
 
 // Database Connection
-connectDB();
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    // For local development only
+    if (process.env.NODE_ENV !== "production") {
+      const PORT = process.env.PORT || 5000;
+      app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+        console.log(`Test the server at: http://localhost:${PORT}`);
+      });
+    }
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 // CORS Configuration
 const allowedOrigins = [
@@ -101,15 +119,6 @@ app.use((req, res) => {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.status(404).json({ message: "Route not found" });
 });
-
-// For local development only
-if (process.env.NODE_ENV !== "production") {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`Test the server at: http://localhost:${PORT}`);
-  });
-}
 
 // Export the Express API for Vercel
 module.exports = app;
