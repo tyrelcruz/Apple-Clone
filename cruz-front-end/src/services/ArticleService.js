@@ -3,19 +3,52 @@ import constants from "../../constants";
 
 const API = axios.create({
   baseURL: `${constants.HOST}/articles`,
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 // Add auth token to requests
-API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+API.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    console.error("Request Error:", error);
+    return Promise.reject(error);
   }
-  return config;
-});
+);
+
+// Add response interceptor to handle errors
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error("API Error:", error.response?.data || error.message);
+    if (error.response?.status === 500) {
+      console.error("Server Error Details:", error.response?.data);
+    }
+    return Promise.reject(error);
+  }
+);
 
 // Fetch all articles
-export const fetchArticles = () => API.get("/");
+export const fetchArticles = async () => {
+  try {
+    const response = await API.get("/");
+    return response;
+  } catch (error) {
+    console.error(
+      "Fetch Articles Error:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
+};
 
 // Create article
 export const createArticle = async (article) => {
