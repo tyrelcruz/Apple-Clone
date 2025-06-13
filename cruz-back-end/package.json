@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "main": "server.js",
   "engines": {
-    "node": "18.x"
+    "node": ">=18.0.0"
   },
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
     "build": "npm install",
-    "vercel-build": "npm install"
+    "vercel-build": "npm install",
+    "postinstall": "npm install"
   },
   "keywords": [],
   "author": "",
