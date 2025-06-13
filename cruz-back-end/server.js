@@ -46,6 +46,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Welcome message route
 app.get("/", (req, res) => {
+  console.log("Root route accessed");
   res.json({
     message: "Welcome to Cruz MERN API",
     status: "Server is running",
