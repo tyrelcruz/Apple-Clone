@@ -57,7 +57,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// API Routes
+// Routes
 app.use("/api/users", userRoutes);
 app.use("/api/articles", articleRoutes);
 
@@ -76,14 +76,8 @@ app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-// For local development only
-if (process.env.NODE_ENV !== "production") {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`Test the server at: http://localhost:${PORT}`);
-  });
-}
-
-// Export the Express API
-module.exports = app;
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Test the server at: http://localhost:${PORT}`);
+});
