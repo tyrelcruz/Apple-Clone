@@ -4,13 +4,19 @@ const Article = require("../models/Article");
 // Get all articles
 const getArticles = async (req, res) => {
   try {
+    console.log("Attempting to fetch articles...");
     const articles = await Article.find().populate(
       "author",
       "firstName lastName"
     );
+    console.log("Articles fetched successfully:", articles.length);
     res.json(articles);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error in getArticles:", error);
+    res.status(500).json({
+      message: error.message,
+      stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
+    });
   }
 };
 

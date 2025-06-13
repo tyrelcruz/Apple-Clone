@@ -11,9 +11,24 @@ const app = express();
 // Database Connection
 connectDB();
 
+// CORS configuration
+const corsOptions = {
+  origin:
+    process.env.NODE_ENV === "production"
+      ? ["apple-clone-rust.vercel.app"] // Replace with your actual frontend domain
+      : ["http://localhost:5173", "http://localhost:3000"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+  maxAge: 86400, // 24 hours
+};
+
 // Basic middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
+
+// Handle OPTIONS requests
+app.options("*", cors(corsOptions));
 
 // Serve static files from the uploads directory
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
