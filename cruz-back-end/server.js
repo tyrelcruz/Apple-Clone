@@ -13,7 +13,11 @@ const app = express();
 connectDB();
 
 // CORS Configuration
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://nd-client-pi.vercel.app",
+  "https://appleclonebackend.vercel.app",
+];
 
 app.use(
   cors({
