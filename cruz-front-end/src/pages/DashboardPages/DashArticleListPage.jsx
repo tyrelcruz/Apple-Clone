@@ -5,6 +5,7 @@ import {
   updateArticle,
   deleteArticle,
 } from "../../services/ArticleService";
+import constants from "../../../constants";
 import {
   Table,
   TableBody,
@@ -77,7 +78,7 @@ function DashArticleListPage() {
     setEditing(true);
     setOpen(true);
     if (article.image) {
-      setPreviewUrl(`http://localhost:3000${article.image}`);
+      setPreviewUrl(`${constants.HOST.replace("/api", "")}${article.image}`);
     }
   };
 
@@ -186,7 +187,7 @@ function DashArticleListPage() {
                   <TableCell>
                     {article.image ? (
                       <img
-                        src={`http://localhost:3000${article.image}`}
+                        src={`${constants.HOST.replace("/api", "")}${article.image}`}
                         alt={article.title}
                         style={{
                           width: "50px",

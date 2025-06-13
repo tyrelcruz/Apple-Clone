@@ -1,7 +1,8 @@
 import axios from "axios";
+import constants from "../../constants";
 
 const API = axios.create({
-  baseURL: "http://localhost:3000/api/articles",
+  baseURL: `${constants.HOST}/articles`,
 });
 
 // Add auth token to requests

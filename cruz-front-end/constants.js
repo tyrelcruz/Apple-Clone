@@ -1,3 +1,7 @@
+const isDevelopment = import.meta.env.VITE_MODE === "development";
+
 export default {
-  HOST: "http://localhost:5000/api",
+  HOST: isDevelopment
+    ? import.meta.env.VITE_LOCAL_HOST
+    : `https://${import.meta.env.VITE_API_URL}/api`,
 };

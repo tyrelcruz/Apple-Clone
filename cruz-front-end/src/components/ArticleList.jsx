@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/ArticleList.css";
-
-const BACKEND_URL = "http://localhost:3000";
+import constants from "../../constants";
 
 function ArticleList({ articles }) {
   // Only show published articles
@@ -25,7 +24,7 @@ function ArticleList({ articles }) {
                 src={
                   article.image
                     ? article.image.startsWith("/uploads/")
-                      ? `${BACKEND_URL}${article.image}`
+                      ? `${constants.HOST.replace("/api", "")}${article.image}`
                       : article.image
                     : "/default-article-image.jpg"
                 }
