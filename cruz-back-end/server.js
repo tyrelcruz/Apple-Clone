@@ -13,10 +13,7 @@ connectDB();
 
 // CORS configuration
 const corsOptions = {
-  origin:
-    process.env.NODE_ENV === "production"
-      ? ["apple-clone-rust.vercel.app"] // Replace with your actual frontend domain
-      : ["http://localhost:5173", "http://localhost:3000"],
+  origin: true, // Allow all origins
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
