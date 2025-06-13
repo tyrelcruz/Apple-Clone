@@ -57,7 +57,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// Routes
+// API Routes
 app.use("/api/users", userRoutes);
 app.use("/api/articles", articleRoutes);
 
@@ -76,8 +76,14 @@ app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Test the server at: http://localhost:${PORT}`);
-});
+// For Vercel serverless functions
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Test the server at: http://localhost:${PORT}`);
+  });
+}
+
+// Export the Express API
+module.exports = app;
